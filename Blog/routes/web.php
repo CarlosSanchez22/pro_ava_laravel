@@ -2,19 +2,21 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/User', function () {
-    return "BIENVENIDO Carlos";
-});
+//Con esto especificamos que vamos a utilizar este controlador en el archivo
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 
+//Bienvenida
+Route::get('/User', [HomeController::class, 'index']);
 
-Route::get('/User/{nombre}/{apellido?}', function (string $nombre, string $apellido=null) {
-    return "BIENVENIDO {$nombre} {$apellido}";
-    
-})->whereAlpha('nombre')->whereAlpha('apellido');
+//Nombre y Apellido
+Route::get('/User/{nombre}/{apellido?}', [PostController::class,'nomApe']
+)->whereAlpha('nombre')->whereAlpha('apellido');
 
+//Suma
+Route::get('/User/{num1}/{num2}', [PostController::class,'suma']
+)->whereAlphaNumeric('num1')->whereAlphaNumeric('num2');
 
-Route::get('/User/{num1}/{num2}', function (string $num1, string $num2) {
-    $suma = $num1 + $num2;
-    return "La suma total es: {$suma} ";
-
-})->whereAlphaNumeric('num1')->whereAlphaNumeric('num2');
+//Resta
+Route::get('/User/Resta/{num1}/{num2}', [PostController::class,'resta']
+)->whereAlphaNumeric('num1')->whereAlphaNumeric('num2');
